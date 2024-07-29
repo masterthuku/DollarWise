@@ -2,7 +2,6 @@
 
 import { addUserEmailToProduct } from "@/lib/actions";
 import { Dialog, Transition } from "@headlessui/react";
-import { Imprima } from "next/font/google";
 import Image from "next/image";
 import { FormEvent, Fragment, useState } from "react";
 
@@ -11,7 +10,7 @@ interface Props {
 }
 
 const Modal = ({ productId }: Props) => {
-  let [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState("");
 
@@ -36,12 +35,12 @@ const Modal = ({ productId }: Props) => {
       </button>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
-          open={isOpen}
-          onClose={() => setIsOpen(false)}
-          className="relative z-50"
+          as="div"
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={closeModal}
         >
           <div className="fixed inset-0 bg-black bg-opacity-25" aria-hidden="true" />
-          <div className="min-h-screen px-4 text-center">
+          <div className="flex items-center justify-center min-h-screen">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -51,21 +50,7 @@ const Modal = ({ productId }: Props) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <span
-                className="inline-block h-screen align-middle"
-                aria-hidden="true"
-              />
-            </Transition.Child>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <div className="dialog-content">
+              <Dialog.Panel className="bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all max-w-md w-full p-6">
                 <div className="flex flex-col">
                   <div className="flex justify-between">
                     <div className="p-3 border border-gray-200 rounded-10">
@@ -121,7 +106,7 @@ const Modal = ({ productId }: Props) => {
                     {isSubmitting ? "Submitting..." : "Track"}
                   </button>
                 </form>
-              </div>
+              </Dialog.Panel>
             </Transition.Child>
           </div>
         </Dialog>
