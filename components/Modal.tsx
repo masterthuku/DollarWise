@@ -28,6 +28,7 @@ const Modal = ({ productId }: Props) => {
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
+
   return (
     <>
       <button type="button" className="btn" onClick={openModal}>
@@ -39,6 +40,7 @@ const Modal = ({ productId }: Props) => {
           onClose={() => setIsOpen(false)}
           className="relative z-50"
         >
+          <div className="fixed inset-0 bg-black bg-opacity-25" aria-hidden="true" />
           <div className="min-h-screen px-4 text-center">
             <Transition.Child
               as={Fragment}
@@ -49,12 +51,11 @@ const Modal = ({ productId }: Props) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0" />
+              <span
+                className="inline-block h-screen align-middle"
+                aria-hidden="true"
+              />
             </Transition.Child>
-            <span
-              className="inline-block h-screen align-middle"
-              aria-hidden="true"
-            />
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
